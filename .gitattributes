@@ -1,1 +1,2 @@
 REACTOR-relatedtar.gz.psd filter=lfs diff=lfs merge=lfs -text
+REACTOR-related.tar.gz.psd filter=lfs diff=lfs merge=lfs -text
