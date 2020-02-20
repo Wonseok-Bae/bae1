@@ -1,43 +1,63 @@
 #! /usr/bin/env bash
 
-USERDIR="/pnfs/dune/persistent/users/wbae/CAF"
-OUTDIR="/pnfs/dune/persistent/users/wbae/reactor"
+#USERDIR="/pnfs/dune/persistent/users/wbae/CAF"
+#OUTDIR="/pnfs/dune/persistent/users/wbae/reactor"
 
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh #grid
 
 #=============================================================================================================1. Input/Output Address + Run the Source setup.sh
 
-# Copy stuff from the local node to USERDIR
-cd ${USERDIR}
-rm -rf *
-echo "cleaning USERDIR"
+rm -rf REACTOR-related
+rm -f REACTOR-related.tar.gz
+echo "step1. clean node"
+
+cd /pnfs/dune/persistent/users/wbae/reactor
+cp REACTOR-related.tar.gz /nashome/w/wbae/reactor
+echo "step2. copy compressed file"
+
 cd /nashome/w/wbae/reactor
-pwd
-
 chmod 777 REACTOR-related.tar.gz
-cp REACTOR-related.tar.gz ${USERDIR}
-echo "copy success"
- 
-cd ${USERDIR}
-pwd
-ls
+tar -zxvf REACTOR-related.tar.gz 
+echo "step3. release compressed file"
 
-chmod 777 REACTOR-related.tar.gz
-tar -zxvf REACTOR-related.tar.gz
 chmod -R 777 REACTOR-related
-echo "release compresssing success"
+cd REACTOR-related
+./app 0.002 0.002 NEOS
+echo "step4. run"
+
+
+# Copy stuff from the local node to USERDIR
+#cd ${USERDIR}
+#rm -rf *
+#echo "cleaning USERDIR"
+#cd /nashome/w/wbae/reactor
+#pwd
+
+#chmod 777 REACTOR-related.tar.gz
+#cp REACTOR-related.tar.gz ${USERDIR}
+#echo "copy success"
+ 
+#cd ${USERDIR}
+#pwd
+#ls
+
+#chmod 777 REACTOR-related.tar.gz
+#tar -zxvf REACTOR-related.tar.gz
+#chmod -R 777 REACTOR-related
+#echo "release compresssing success"
 
 #===========================================================================================================2. Copy/Move tar file + Remove xml file
-cd REACTOR-related
-pwd
-ls
-g++ -std=c++11 -o app app.cc simple_DC.cc -lRooFit -lMinuit -lRooFitCore `root-config --cflags --glibs`
-echo "complie success"
-./app 0.002 0.002 NEOS
+#cd REACTOR-related
+#pwd
+#ls
+#g++ -std=c++11 -o app app.cc simple_DC.cc -lRooFit -lMinuit -lRooFitCore `root-config --cflags --glibs`
+#echo "complie success"
+#./app 0.002 0.002 NEOS
+#echo "run success"
 
-cd /nashome/w/wbae/reactor
-
-
+#cd /nashome/w/wbae/reactor
+#pwd
+#echo "come back"
 
 
 
