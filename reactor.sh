@@ -1,9 +1,10 @@
 #! /usr/bin/env bash
 
-#USERDIR="/pnfs/dune/persistent/users/wbae/CAF"
+USERDIR="/pnfs/dune/persistent/users/wbae/reactor"
 #OUTDIR="/pnfs/dune/persistent/users/wbae/reactor"
 
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh #grid
+#jobsub_submit --group dune --role=Analysis -N 100 --OS=SL6 --expected-lifetime=8h --memory=2000MB --group=dune file:///nashome/w/wonseok/reactor.sh
 
 #=============================================================================================================1. Input/Output Address + Run the Source setup.sh
 
@@ -11,11 +12,10 @@ rm -rf REACTOR-related
 rm -f REACTOR-related.tar.gz
 echo "step1. clean node"
 
-cd /pnfs/dune/persistent/users/wbae/reactor
-cp REACTOR-related.tar.gz /nashome/w/wbae/reactor
+#cd /pnfs/dune/persistent/users/wbae/reactor
+ifdh cp /pnfs/dune/persistent/users/wbae/reactor/REACTOR-related.tar.gz .
 echo "step2. copy compressed file"
 
-cd /nashome/w/wbae/reactor
 chmod 777 REACTOR-related.tar.gz
 tar -zxvf REACTOR-related.tar.gz 
 echo "step3. release compressed file"
@@ -25,6 +25,9 @@ cd REACTOR-related
 ./app 0.002 0.002 NEOS
 echo "step4. run"
 
+ifdh cp *.root /pnfs/dune/persistent/users/wbae/reactor/REACTOR-related
+cd ..
+echo "step5. copy output files"
 
 # Copy stuff from the local node to USERDIR
 #cd ${USERDIR}
