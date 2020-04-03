@@ -121,12 +121,14 @@ using namespace std;
 
  RooArgList list("list");
  list.add(*rep);
+ std::cout<<"formula[0] : "<< formula[0] <<" formula[1] : "<< formula[1] <<" formula[2] : "<< formula[2] << " formula[3] : "<<formula[3] <<" formula[4] : "<< formula[4] << " formula[5] : "<< formula[5] << " formula[6] : "<< formula[6] << " formula[7] : "<< formula[7] << " formula[8] : "<< formula[8] << " formula[9] : "<<formula[9] <<" formula[10] : "<< formula[10] << std::endl;
  sprintf(formula,"%s","@0");
+ std::cout<<"sprintf(formula, s, @0); "<< formula <<std::endl;
  RooFormulaVar* fcn = new RooFormulaVar("fit","fit",formula,list);
 
  // ******************************** Important setup here *************************************
  // *******************************************************************************************
- rep->fitSingleExp(Form("%s",argv[3]));
+ rep->fitSingleExp(Form("%s",argv[4]));
  rep->ifEqualIso(false);
  rep->setSysts(false);
  // *******************************************************************************************
@@ -386,10 +388,15 @@ using namespace std;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
  ofstream outText;
- outText.open(Form("./scan2Dnew_%s_fissionFree_ISO%d_SYST%d_%s_%s.txt",argv[3], rep->GetEqualIso(), rep->GetSysts(), argv[1], argv[2]) );
+ outText.open(Form("./scan2Dnew_%s_fissionFree_ISO%d_SYST%d_%s_%s_%s.txt",argv[4], rep->GetEqualIso(), rep->GetSysts(), argv[1], argv[2], argv[3]) );
 
  double iDM = atof(argv[1]);
- double iST = atof(argv[2]);
+ //double iST = atof(argv[2]);
+ double iSTfrom = atof(argv[2]);
+ double iSTto = atof(argv[3]);
+  
+ while( iSTfrom < iSTto )
+ {
  //for(Int_t iDM=6;iDM<21;iDM++)
  //{
  //    for(Int_t iST=0;iST<21;iST++)
@@ -397,7 +404,7 @@ using namespace std;
         // means that s2t14 0.001 - 1 and dm2 0.01 - 10
         //rep->getParVar(2)->setVal(TMath::Power(10.,(-3.*iST*2/100.)));
         //rep->getParVar(6)->setVal(TMath::Power(10,(-2 + 3.*iDM*2/100.)));
-	rep->getParVar(2)->setVal(iST/80.);
+	rep->getParVar(2)->setVal(iSTfrom/80.);
 	rep->getParVar(6)->setVal(iDM/80.);
 	rep->getParVar(2)->setConstant(true);
  	rep->getParVar(6)->setConstant(true);
@@ -430,9 +437,11 @@ using namespace std;
         //status =  1 : covariance only approximate
         //status =  2 : full matrix but forced pos def
         //status =  3 : full accurate matrix
-	outText<<iDM<<" "<<iST<<" "<<bestFit<<std::endl;
+	outText<<iDM<<" "<<iSTfrom<<" "<<bestFit<<std::endl;
 //     }
 // }
+	iSTfrom++;
+ }
 
  //////////////////////	
  //inline Int_t status() const 

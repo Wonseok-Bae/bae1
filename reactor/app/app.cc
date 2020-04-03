@@ -65,7 +65,7 @@ using namespace std;
    binHist->SetBinContent(i+1, 0.5 + 0.25*i);
  }
 
- TString fileLocation = "/nashome/w/wbae/reactor/REACTOR-related/";
+ TString fileLocation = "./";
  rep->setFileLocation(fileLocation);
 
  TH1D* fissionHist = new TH1D("","",16,0,16);
@@ -247,16 +247,16 @@ using namespace std;
  rep->getParVar(32)->setConstant(true);  // 5.5 - 5.75
  rep->getParVar(33)->setConstant(true);  // 5.75 - 6
  rep->getParVar(34)->setConstant(true);  // 6 - 6.25
- rep->getParVar(35)->setConstant(false);  // 6.25 - 6.5
- rep->getParVar(36)->setConstant(false);  // 6.5 - 6.75
- rep->getParVar(37)->setConstant(false);  // 6.75 - 7
- rep->getParVar(38)->setConstant(false);  // 7 - 7.25
- rep->getParVar(39)->setConstant(false);  // 7.25 - 7.5
- rep->getParVar(40)->setConstant(false);  // 7.5 - 7.75
- rep->getParVar(41)->setConstant(false);  // 7.75 - 8
- rep->getParVar(42)->setConstant(false);  // 8 - 8.25
- rep->getParVar(43)->setConstant(false);  // 8.25 - 8.5
- rep->getParVar(44)->setConstant(false);  // 8.5 - 8.75
+ rep->getParVar(35)->setConstant(true);  // 6.25 - 6.5
+ rep->getParVar(36)->setConstant(true);  // 6.5 - 6.75
+ rep->getParVar(37)->setConstant(true);  // 6.75 - 7
+ rep->getParVar(38)->setConstant(true);  // 7 - 7.25
+ rep->getParVar(39)->setConstant(true);  // 7.25 - 7.5
+ rep->getParVar(40)->setConstant(true);  // 7.5 - 7.75
+ rep->getParVar(41)->setConstant(true);  // 7.75 - 8
+ rep->getParVar(42)->setConstant(true);  // 8 - 8.25
+ rep->getParVar(43)->setConstant(true);  // 8.25 - 8.5
+ rep->getParVar(44)->setConstant(true);  // 8.5 - 8.75
  //rep->getParVar(45)->setConstant(true);  // 8.75 - 9
 
 
@@ -390,10 +390,10 @@ using namespace std;
 
  double iDM = atof(argv[1]);
  double iST = atof(argv[2]);
- for(Int_t iDM=6;iDM<21;iDM++)
- {
-     for(Int_t iST=0;iST<21;iST++)
-     {
+// for(Int_t iDM=6;iDM<21;iDM++)
+// {
+    // for(Int_t iST=0;iST<21;iST++)
+    // {
         // means that s2t14 0.001 - 1 and dm2 0.01 - 10
         //rep->getParVar(2)->setVal(TMath::Power(10.,(-3.*iST*2/100.)));
         //rep->getParVar(6)->setVal(TMath::Power(10,(-2 + 3.*iDM*2/100.)));
@@ -431,8 +431,8 @@ using namespace std;
         //status =  2 : full matrix but forced pos def
         //status =  3 : full accurate matrix
 	outText<<iDM<<" "<<iST<<" "<<bestFit<<std::endl;
-     }
- }
+  //   }
+ //}
 
  //////////////////////	
  //inline Int_t status() const 
